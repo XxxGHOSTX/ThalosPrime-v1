@@ -1,0 +1,108 @@
+name: Thalos Prime CI/CD
+
+on:
+  push:
+    branches: [ main, develop, copilot/* ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+        
+    - name: Display Python version
+      run: python -c "import sys; print(sys.version)"
+      
+    - name: Run unit tests
+      run: |
+        cd tests/unit
+        for test in *.py; do
+          echo "Running $test"
+          python "$test" || exit 1
+        done
+        
+    - name: Run integration tests
+      run: |
+        cd tests/integration
+        python test_system.py
+        
+    - name: Test CLI interface
+      run: |
+        python src/main.py --help
+        python src/main.py status
+        
+  lint:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+        
+    - name: Check Python syntax
+      run: |
+        python -m py_compile src/**/*.py
+        python -m py_compile tests/**/*.py
+        
+    - name: Verify bootstrap script
+      run: |
+        chmod +x create_thalos_bootstrap.sh
+        bash -n create_thalos_bootstrap.sh
+        
+  build:
+    name: Build Verification
+    runs-on: ubuntu-latest
+    needs: [test, lint]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+        
+    - name: Verify imports
+      run: |
+        cd src
+        python -c "from core.cis import CIS; print('✓ CIS import')"
+        python -c "from core.memory import MemoryModule; print('✓ Memory import')"
+        python -c "from codegen import CodeGenerator; print('✓ CodeGen import')"
+        python -c "from interfaces.cli import CLI; print('✓ CLI import')"
+        python -c "from interfaces.api import API; print('✓ API import')"
+        
+    - name: Test bootstrap script
+      run: |
+        ./create_thalos_bootstrap.sh
+        ls -la src/ tests/ config/ docs/
+        
+    - name: Generate test report
+      run: |
+        echo "## Test Report" > test_report.md
+        echo "- All unit tests: PASSED" >> test_report.md
+        echo "- All integration tests: PASSED" >> test_report.md
+        echo "- Code quality: PASSED" >> test_report.md
+        echo "- Build verification: PASSED" >> test_report.md
+        cat test_report.md
+        
+    - name: Upload test report
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-report
+        path: test_report.md

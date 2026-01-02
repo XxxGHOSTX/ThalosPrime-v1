@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  thalos-prime:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: thalos-prime
+    image: thalos-prime:1.0
+    restart: unless-stopped
+    environment:
+      - PYTHONPATH=/app/src
+      - THALOS_ENV=development
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    ports:
+      - "8000:8000"
+    command: python src/main.py status
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.path.insert(0, '/app/src'); from core.cis import CIS; cis = CIS(); cis.boot(); sys.exit(0 if cis.status()['status'] == 'operational' else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Future: Web Interface
+  # thalos-web:
+  #   build:
+  #     context: ./web
+  #     dockerfile: Dockerfile
+  #   container_name: thalos-web
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - thalos-prime
+  #   environment:
+  #     - THALOS_API_URL=http://thalos-prime:8000
+
+  # Future: Monitoring
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   container_name: thalos-prometheus
+  #   volumes:
+  #     - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+  #   ports:
+  #     - "9090:9090"
+
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   container_name: thalos-grafana
+  #   ports:
+  #     - "3001:3000"
+  #   depends_on:
+  #     - prometheus
+
+networks:
+  default:
+    name: thalos-network
+
+volumes:
+  data:
+  logs:

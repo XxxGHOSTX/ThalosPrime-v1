@@ -48,3 +48,10 @@ htmlcov/
 # Temporary
 /tmp/
 *.tmp
+
+# Docker
+data/
+logs/
+
+# Build artifacts
+*.log
