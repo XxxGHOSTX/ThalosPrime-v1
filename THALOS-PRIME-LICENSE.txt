@@ -1,0 +1,67 @@
+THALOS PRIME PROPRIETARY LICENSE
+
+Copyright © 2026 Tony Ray Macier III.
+All rights reserved.
+
+1. GRANT OF LICENSE
+
+No license is granted by default.
+
+Permission to access, use, copy, modify, distribute, display, execute, analyze,
+or create derivative works from Thalos Prime or any of its components is granted
+only through explicit, written authorization from the copyright holder.
+
+2. OWNERSHIP
+
+All right, title, and interest in and to Thalos Prime—including all source code,
+documentation, architectural designs, system logic descriptions, interfaces,
+diagrams, workflows, and derivative works—remain the exclusive property of
+Tony Ray Macier III.
+
+No ownership rights are transferred under any circumstances.
+
+3. RESTRICTIONS
+
+Without prior written permission, you may not:
+
+– Copy, redistribute, or sublicense the software or documentation
+– Modify, adapt, translate, or create derivative works
+– Reverse engineer, decompile, or disassemble any portion of the system
+– Use the system or its outputs to train machine learning or artificial
+  intelligence models
+– Use the system for commercial, military, intelligence, surveillance,
+  or law-enforcement purposes
+– Represent Thalos Prime or any of its components as your own work
+– Remove or alter copyright, ownership, or attribution notices
+
+4. DERIVATIVE WORKS
+
+Any derivative work, modification, extension, integration, or adaptation of
+Thalos Prime—whether internal or external, direct or indirect—shall be deemed
+a work made for hire for the exclusive benefit of the copyright holder unless
+otherwise agreed to in writing.
+
+Unauthorized derivative works constitute copyright infringement.
+
+5. CONFIDENTIALITY
+
+Any access to non-public portions of Thalos Prime is confidential by nature.
+Disclosure to third parties without explicit written authorization is prohibited.
+
+6. TERMINATION
+
+Any violation of this license immediately and automatically terminates any
+permissions granted. Upon termination, all copies of Thalos Prime and related
+materials must be permanently destroyed.
+
+7. NO WARRANTY
+
+Thalos Prime is provided "AS IS," without warranty of any kind, express or implied,
+including but not limited to merchantability, fitness for a particular purpose,
+or non-infringement.
+
+8. GOVERNING LAW
+
+This license shall be governed by and construed in accordance with the laws of
+the United States of America and the State of Utah, without regard to conflict
+of law principles.

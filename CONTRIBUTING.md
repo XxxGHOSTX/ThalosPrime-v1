@@ -1,5 +1,17 @@
 # Contributing to Thalos Prime
 
+---
+
+**© 2026 Tony Ray Macier III. All rights reserved.**
+
+This document is part of Thalos Prime, an original proprietary software system. Unauthorized reproduction, modification, distribution, or use is strictly prohibited without express written permission.
+
+**Thalos Prime™ is a proprietary system.**
+
+---
+
+
+
 Thank you for your interest in contributing to Thalos Prime! This document provides guidelines and instructions for contributing to the project.
 
 ## Table of Contents

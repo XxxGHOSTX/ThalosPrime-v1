@@ -1,5 +1,17 @@
 # Thalos Prime v1.0 - Implementation Summary
 
+---
+
+**© 2026 Tony Ray Macier III. All rights reserved.**
+
+This document is part of Thalos Prime, an original proprietary software system. Unauthorized reproduction, modification, distribution, or use is strictly prohibited without express written permission.
+
+**Thalos Prime™ is a proprietary system.**
+
+---
+
+
+
 ## Overview
 
 Thalos Prime v1.0 is a complete deterministic system framework implementing:

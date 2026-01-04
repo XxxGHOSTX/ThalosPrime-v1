@@ -1,5 +1,17 @@
 # Thalos Prime - Roadmap & Enhancement Plan
 
+---
+
+**© 2026 Tony Ray Macier III. All rights reserved.**
+
+This document is part of Thalos Prime, an original proprietary software system. Unauthorized reproduction, modification, distribution, or use is strictly prohibited without express written permission.
+
+**Thalos Prime™ is a proprietary system.**
+
+---
+
+
+
 ## Overview
 
 This document outlines the enhancement plan for Thalos Prime based on the comprehensive feedback received. It categorizes items into immediate implementations, short-term goals, and long-term strategic initiatives.
