@@ -55,3 +55,14 @@ logs/
 
 # Build artifacts
 *.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Data storage
+storage.json
+*.db
+*.sqlite
+*.sqlite3

@@ -217,6 +217,37 @@ def test_no_side_effects():
     print("✓ No side effects test passed")
 
 
+def test_persistence():
+    """Test file-based persistence"""
+    import tempfile
+    
+    # Create temporary file for testing
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as f:
+        temp_path = f.name
+    
+    try:
+        # Create memory with persistence and add data
+        memory1 = MemoryModule(persistence_path=temp_path)
+        memory1.create('key1', 'value1')
+        memory1.create('key2', {'nested': 'data'})
+        
+        # Save to disk
+        result = memory1.save_to_disk()
+        assert result is True
+        
+        # Create new memory instance and verify data loads
+        memory2 = MemoryModule(persistence_path=temp_path)
+        assert memory2.read('key1') == 'value1'
+        assert memory2.read('key2') == {'nested': 'data'}
+        assert memory2.count() == 2
+        
+        print("✓ Persistence test passed")
+    finally:
+        # Clean up temp file
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+
+
 if __name__ == '__main__':
     print("Running Memory Module Unit Tests...")
     test_memory_initialization()
@@ -230,4 +261,5 @@ if __name__ == '__main__':
     test_clear()
     test_deterministic_behavior()
     test_no_side_effects()
+    test_persistence()
     print("\nAll Memory Module tests passed!")
