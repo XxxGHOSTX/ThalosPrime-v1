@@ -26,6 +26,8 @@ from wetware.life_support import LifeSupport
 from ai.neural.bio_neural_network import BioNeuralNetwork
 from ai.learning.reinforcement_learner import ReinforcementLearner
 from database.connection_manager import DatabaseManager
+from interfaces.web.nlp_processor import NLPProcessor
+from interfaces.web.action_handler import ActionHandler
 
 app = Flask(__name__,
             template_folder='templates',
@@ -36,6 +38,10 @@ print("Initializing Thalos Prime Synthetic Biological Intelligence...")
 cis = CIS()
 cis.boot()
 print("✓ CIS operational")
+
+# Initialize NLP Processor
+nlp = NLPProcessor()
+print("✓ NLP Processor initialized")
 
 # Initialize Database
 db_manager = DatabaseManager(db_type="memory")
@@ -158,7 +164,7 @@ def send_static(path):
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
-    """Handle chat messages and process through complete wetware pipeline"""
+    """Handle chat messages with full NLP, action execution, and wetware processing"""
     try:
         data = request.get_json()
         message = data.get('message', '')
@@ -166,50 +172,81 @@ def chat():
         if not message:
             return jsonify({'error': 'No message provided'}), 400
         
-        # Process through complete wetware pipeline
+        # Step 1: Analyze message with NLP
+        analysis = nlp.analyze_message(message)
+        
+        # Step 2: Detect if user wants to execute an action
+        action_type, action_params = action_handler.detect_action(message)
+        
+        # Step 3: Process through complete wetware pipeline
         wetware_result = process_through_wetware(message)
         
-        # Also process through neural network for comparison
+        # Step 4: Also process through neural network
         input_pattern = message_to_pattern(message)
         neural_net.stimulate_inputs(input_pattern)
         
-        # Simulate neural processing
         for _ in range(50):
             neural_net.simulate_step()
         
         output_activity = neural_net.get_output_activity()
         net_stats = neural_net.get_network_stats()
         
-        # Generate response based on wetware and neural processing
-        response_text = generate_wetware_response(
-            message, 
-            wetware_result, 
-            output_activity,
-            net_stats
-        )
+        # Add wetware viability
+        wetware_result['life_support']['viability'] = life_support.get_viability_score()
         
-        # Store interaction in database
+        # Step 5: Execute action if detected
+        action_result = None
+        if action_type:
+            action_result = action_handler.execute_action(action_type, action_params)
+        
+        # Step 6: Generate intelligent response
+        if action_result and action_result.get('success'):
+            # Use action result as primary response
+            response_text = self._format_action_response(action_result, action_type)
+            
+            # Add wetware context
+            lobe_info = f"\n\n[Processed through {len(wetware_result['lobe_responses'])} organoid lobes, "
+            lobe_info += f"{wetware_result['total_spikes']} spikes generated, "
+            lobe_info += f"viability: {wetware_result['life_support']['viability']:.1%}]"
+            response_text += lobe_info
+        else:
+            # Generate NLP response with wetware data
+            response_text = nlp.generate_response(message, analysis, wetware_result)
+            
+            # If still generic, use detailed wetware response
+            if 'specific patterns are still emerging' in response_text or 'Could you elaborate' in response_text:
+                response_text = generate_wetware_response(
+                    message, wetware_result, output_activity, net_stats
+                )
+        
+        # Step 7: Store interaction in database
         try:
-            with db_manager.get_connection() as conn:
-                # Store message and response
-                conn['data'][f'chat_{len(conn["data"])}'] = {
-                    'message': message,
-                    'response': response_text,
-                    'wetware_data': {
-                        'total_spikes': wetware_result['total_spikes'],
-                        'lobes_active': len(wetware_result['lobe_responses']),
-                        'decoded_confidence': wetware_result['decoded'].get('confidence', 0)
-                    }
+            conn = db_manager.pool.get_connection()
+            interaction_id = f'chat_{len(conn["data"])}'
+            conn['data'][interaction_id] = {
+                'message': message,
+                'response': response_text,
+                'analysis': analysis,
+                'action_executed': action_type,
+                'action_result': action_result,
+                'wetware_data': {
+                    'total_spikes': wetware_result['total_spikes'],
+                    'lobes_active': len(wetware_result['lobe_responses']),
+                    'decoded_confidence': wetware_result['decoded'].get('confidence', 0),
+                    'intent': analysis['intent'],
+                    'topics': analysis['topics']
                 }
+            }
+            db_manager.pool.return_connection(conn)
         except Exception as e:
             print(f"Database storage error: {e}")
         
-        # Prepare comprehensive metadata
+        # Step 8: Prepare comprehensive metadata
         life_support_status = wetware_result['life_support']
         lobe_responses = wetware_result['lobe_responses']
         
         metadata = {
-            'neuralDensity': sum(r.get('confidence', 0) for r in lobe_responses) / len(lobe_responses),
+            'neuralDensity': sum(r.get('confidence', 0) for r in lobe_responses) / len(lobe_responses) if lobe_responses else 0,
             'confidence': wetware_result['decoded'].get('confidence', 0.5),
             'activeLobes': [r['lobe_type'] for r in lobe_responses],
             'processingTime': round(net_stats.get('current_time', 0) / 1000.0, 2),
@@ -222,12 +259,21 @@ def chat():
                 'viability': life_support.get_viability_score()
             },
             'meaChannels': wetware_result['mea_stats']['active_channels'],
-            'organoidHealth': 'optimal' if all(r.get('confidence', 0) > 0.3 for r in lobe_responses) else 'suboptimal'
+            'organoidHealth': 'optimal' if all(r.get('confidence', 0) > 0.3 for r in lobe_responses) else 'suboptimal',
+            'nlpAnalysis': {
+                'intent': analysis['intent'],
+                'topics': analysis['topics'],
+                'sentiment': analysis['sentiment'],
+                'complexity': analysis['complexity']
+            },
+            'actionExecuted': action_type,
+            'actionSuccess': action_result.get('success') if action_result else False
         }
         
         return jsonify({
             'response': response_text,
-            'metadata': metadata
+            'metadata': metadata,
+            'action_result': action_result
         })
         
     except Exception as e:
@@ -235,6 +281,47 @@ def chat():
         import traceback
         traceback.print_exc()
         return jsonify({'error': str(e)}), 500
+
+
+def _format_action_response(action_result: Dict[str, Any], action_type: str) -> str:
+    """Format action result into readable response"""
+    if not action_result.get('success'):
+        return f"Action failed: {action_result.get('error', 'Unknown error')}"
+    
+    message = action_result.get('message', '')
+    
+    # Add specific formatting based on action type
+    if 'memory' in action_type:
+        if 'list' in action_type:
+            entries = action_result.get('entries', {})
+            if entries:
+                message += "\n\nMemory Contents:\n"
+                for key, value in entries.items():
+                    message += f"• {key}: {value}\n"
+        else:
+            message += f"\n✓ Memory operation completed successfully"
+    
+    elif 'calculate' in action_type:
+        result = action_result.get('result')
+        message += f"\n\n**Result:** {result}"
+    
+    elif 'generate_code' in action_type:
+        code = action_result.get('code', '')
+        language = action_result.get('language', 'python')
+        message += f"\n\n```{language}\n{code}\n```"
+    
+    elif 'system_status' in action_type or 'organoid_status' in action_type:
+        # Format status nicely
+        status = action_result.get('status') or action_result.get('organoids')
+        if status:
+            message += "\n\n" + json.dumps(status, indent=2)
+    
+    elif 'explain' in action_type:
+        explanation = action_result.get('explanation')
+        if explanation:
+            message = f"**{action_result.get('concept', 'Concept')}** ({action_result.get('domain', 'general')})\n\n{explanation}"
+    
+    return message
 
 
 @app.route('/api/status', methods=['GET'])
