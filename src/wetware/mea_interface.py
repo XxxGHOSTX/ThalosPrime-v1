@@ -193,14 +193,26 @@ class MEAInterface:
         Decode spike train from biological tissue into digital signal
         
         Args:
-            raw_data: Raw electrode readings
+            raw_data: Raw electrode readings or spike data
             
         Returns:
             Decoded digital signal
         """
         if not self.active:
-            return {"error": "MEA interface not active", "decoded": None}
-            
+            return {"error": "MEA interface not active", "decoded": False}
+        
+        # Handle empty or invalid input
+        if not raw_data:
+            return {
+                "decoded": True,
+                "confidence": 0.0,
+                "response_type": "none",
+                "firing_rate": 0.0,
+                "synchrony": 0.0,
+                "active_regions": 0,
+                "data": {"patterns": [], "dominant_region": "none"}
+            }
+        
         # Perform spike sorting
         sorted_spikes = self._sort_spikes(raw_data)
         

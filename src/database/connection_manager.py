@@ -23,11 +23,16 @@ class ConnectionPool:
         self.available = []
         self.in_use = []
         self.total_reconnections = 0
+        self.total_created = 0
+        
+        # Shared data store for memory-type connections
+        self.shared_data = {}
         
         for _ in range(min_conn):
             try:
                 conn = self.create_connection()
                 self.available.append(conn)
+                self.total_created += 1
             except Exception as e:
                 logger.error(f"Init failed: {e}")
     
@@ -39,6 +44,7 @@ class ConnectionPool:
         elif len(self.in_use) < self.max_connections:
             conn = self.create_connection()
             self.in_use.append(conn)
+            self.total_created += 1
             return conn
         raise Exception("No connections available")
     
@@ -46,6 +52,26 @@ class ConnectionPool:
         if conn in self.in_use:
             self.in_use.remove(conn)
             self.available.append(conn)
+    
+    def get_statistics(self):
+        return {
+            "available_connections": len(self.available),
+            "in_use_connections": len(self.in_use),
+            "total_connections": len(self.available) + len(self.in_use),
+            "max_connections": self.max_connections,
+            "total_created": self.total_created,
+            "total_reconnections": self.total_reconnections
+        }
+    
+    def close_all(self):
+        for conn in self.available + self.in_use:
+            try:
+                if hasattr(conn, 'close'):
+                    conn.close()
+            except:
+                pass
+        self.available.clear()
+        self.in_use.clear()
 
 
 class DatabaseManager:
@@ -58,8 +84,11 @@ class DatabaseManager:
     
     def _create_connection(self):
         if self.db_type == "memory":
-            return {"type": "memory", "data": {}}
-        return {"type": "memory", "data": {}}
+            # Return reference to shared data store
+            return {"type": "memory", "data": self.pool.shared_data, "connected": True}
+        elif self.db_type == "file":
+            return {"type": "file", "path": self.config.get("path", "data.json"), "data": self.pool.shared_data, "connected": True}
+        return {"type": "memory", "data": self.pool.shared_data, "connected": True}
     
     @contextmanager
     def get_connection(self):
@@ -72,3 +101,18 @@ class DatabaseManager:
     def execute(self, query, params=None):
         with self.get_connection() as conn:
             return conn
+    
+    def get_statistics(self):
+        """Get database manager statistics"""
+        stats = {
+            "db_type": self.db_type,
+            "config": {k: v for k, v in self.config.items() if k != 'password'}
+        }
+        stats["pool"] = self.pool.get_statistics()
+        return stats
+    
+    def close(self):
+        """Close all connections"""
+        if self.pool:
+            self.pool.close_all()
+        logger.info("Database manager closed")
