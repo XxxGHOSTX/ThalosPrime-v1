@@ -202,7 +202,7 @@ def chat():
         # Step 6: Generate intelligent response
         if action_result and action_result.get('success'):
             # Use action result as primary response
-            response_text = self._format_action_response(action_result, action_type)
+            response_text = _format_action_response(action_result, action_type)
             
             # Add wetware context
             lobe_info = f"\n\n[Processed through {len(wetware_result['lobe_responses'])} organoid lobes, "
