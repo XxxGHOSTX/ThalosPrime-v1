@@ -1,6 +1,40 @@
-# Thalos Prime v1.0 - Setup and Installation Guide
+# Thalos Prime v2.0 - Setup and Installation Guide
 
-## Quick Start
+## 🚀 Quick Start (Easiest Method)
+
+### Auto Web Deployment (Recommended for New Users)
+
+**One-command deployment** that handles everything:
+
+**Linux/macOS:**
+```bash
+./auto_web_deploy.sh
+```
+
+**Windows:**
+```bash
+auto_web_deploy.bat
+```
+
+**Universal (all platforms):**
+```bash
+python auto_web_deploy.py
+```
+
+This script automatically:
+1. ✅ Checks Python version (3.8+ required)
+2. ✅ Creates virtual environment
+3. ✅ Installs all dependencies
+4. ✅ Sets up .env configuration
+5. ✅ Creates data directories
+6. ✅ Verifies installation
+7. ✅ Launches web interface on http://localhost:8000
+
+**Perfect for getting started in under 2 minutes!**
+
+---
+
+## Manual Installation
 
 ### 1. Create a Virtual Environment
 

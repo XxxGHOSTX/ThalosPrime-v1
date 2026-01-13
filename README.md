@@ -65,7 +65,37 @@ pip install -r requirements.txt
 
 ### Running the System
 
-#### Option 1: Web Interface (Recommended for First-Time Users)
+#### Option 1: Auto Web Deployment (🆕 Fastest - Recommended!)
+
+**One-command deployment** - Sets up everything and launches the web interface automatically:
+
+**Linux/macOS:**
+```bash
+./auto_web_deploy.sh
+```
+
+**Windows:**
+```bash
+auto_web_deploy.bat
+```
+
+**Universal (all platforms):**
+```bash
+python auto_web_deploy.py
+```
+
+This will:
+1. ✅ Check Python installation
+2. ✅ Create virtual environment
+3. ✅ Install all dependencies
+4. ✅ Configure environment
+5. ✅ Create data directories
+6. ✅ Verify installation
+7. ✅ Launch web interface on http://localhost:8000
+
+**Perfect for first-time users - just run and go!**
+
+#### Option 2: Web Interface (Manual)
 
 Experience the Matrix-style chatbot with code rain background:
 
@@ -87,7 +117,7 @@ Then open your browser to: **http://localhost:8000**
 - `/lobes` - Check organoid activity
 - `/help` - Show all commands
 
-#### Option 2: Command Line Interface
+#### Option 3: Command Line Interface
 
 For programmers and system administrators:
 
@@ -101,7 +131,7 @@ python thalos_prime.py cli memory create test_key test_value
 python thalos_prime.py cli --help
 ```
 
-#### Option 3: Test the System
+#### Option 4: Test the System
 
 Verify all components are working:
 
