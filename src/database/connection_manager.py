@@ -25,9 +25,6 @@ class ConnectionPool:
         self.total_reconnections = 0
         self.total_created = 0
         
-        # Shared data store for memory-type connections
-        self.shared_data = {}
-        
         for _ in range(min_conn):
             try:
                 conn = self.create_connection()
@@ -80,15 +77,16 @@ class DatabaseManager:
     def __init__(self, db_type="memory", config=None):
         self.db_type = db_type
         self.config = config or {}
+        self.shared_data = {}  # Initialize shared data before pool
         self.pool = ConnectionPool(self._create_connection)
     
     def _create_connection(self):
         if self.db_type == "memory":
             # Return reference to shared data store
-            return {"type": "memory", "data": self.pool.shared_data, "connected": True}
+            return {"type": "memory", "data": self.shared_data, "connected": True}
         elif self.db_type == "file":
-            return {"type": "file", "path": self.config.get("path", "data.json"), "data": self.pool.shared_data, "connected": True}
-        return {"type": "memory", "data": self.pool.shared_data, "connected": True}
+            return {"type": "file", "path": self.config.get("path", "data.json"), "data": self.shared_data, "connected": True}
+        return {"type": "memory", "data": self.shared_data, "connected": True}
     
     @contextmanager
     def get_connection(self):
