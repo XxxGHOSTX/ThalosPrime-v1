@@ -1,4 +1,8 @@
-# Thalos Prime v1.0 - Python Dependencies
+# Thalos Prime v2.0 - Python Dependencies
+
+# Web Framework
+Flask>=3.0.0
+Flask-CORS>=4.0.0
 
 # Testing framework
 pytest>=7.0.0
@@ -7,18 +11,21 @@ pytest-cov>=4.0.0
 # Configuration management
 python-dotenv>=1.0.0
 
-# Production web server (for API deployment)
-# Note: Choose one based on your web framework preference
-# gunicorn>=21.0.0  # For Flask/WSGI applications
-# uvicorn>=0.24.0   # For FastAPI/ASGI applications
+# Production web server
+gunicorn>=21.0.0  # For Flask/WSGI applications
 
-# Optional: Enhanced configuration parsing
-# pyyaml>=6.0       # If using YAML configs
-# tomli>=2.0.0      # If using TOML configs
+# AI/ML Libraries (optional but recommended)
+numpy>=1.24.0     # For numerical computations
+scipy>=1.10.0     # For scientific computing
 
-# Optional: Database drivers for persistence
+# Database drivers for persistence
+# Uncomment as needed:
 # redis>=5.0.0      # For Redis-based storage
 # psycopg2-binary>=2.9.0  # For PostgreSQL
+# pymongo>=4.5.0    # For MongoDB
+
+# Enhanced configuration parsing
+# pyyaml>=6.0       # If using YAML configs
 
 # Development tools (optional)
 # black>=23.0.0     # Code formatting

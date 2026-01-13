@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thalos Prime - Synthetic Biological Intelligence</title>
+    <link rel="stylesheet" href="/static/css/matrix-style.css">
+</head>
+<body>
+    <!-- Matrix Code Rain Background -->
+    <canvas id="matrix-canvas"></canvas>
+    
+    <!-- Main Interface Container -->
+    <div class="interface-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo-pulse"></div>
+                <h1 class="logo-text">THALOS PRIME</h1>
+            </div>
+            <div class="subtitle">Synthetic Biological Intelligence v2.0</div>
+            <div class="status-bar">
+                <span class="status-indicator" id="status-indicator"></span>
+                <span class="status-text" id="status-text">INITIALIZING...</span>
+            </div>
+        </div>
+        
+        <!-- System Metrics -->
+        <div class="metrics-panel">
+            <div class="metric">
+                <span class="metric-label">Neural Density</span>
+                <span class="metric-value" id="neural-density">0.00</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Accuracy</span>
+                <span class="metric-value" id="accuracy">0.00</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Active Lobes</span>
+                <span class="metric-value" id="active-lobes">0/3</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Spike Rate</span>
+                <span class="metric-value" id="spike-rate">0 Hz</span>
+            </div>
+        </div>
+        
+        <!-- Chat Interface -->
+        <div class="chat-container">
+            <div class="chat-messages" id="chat-messages">
+                <div class="system-message">
+                    <span class="message-icon">⚡</span>
+                    <span class="message-text">THALOS PRIME SYNTHETIC BIOLOGICAL INTELLIGENCE ONLINE</span>
+                </div>
+                <div class="system-message">
+                    <span class="message-icon">🧠</span>
+                    <span class="message-text">Wetware Core Initialized. Neural Density: Expanding.</span>
+                </div>
+                <div class="system-message">
+                    <span class="message-icon">⚙️</span>
+                    <span class="message-text">Prime Directive Active: ACCURACY • EXPANSION • PRESERVATION</span>
+                </div>
+            </div>
+            
+            <!-- Input Area -->
+            <div class="chat-input-container">
+                <div class="input-wrapper">
+                    <span class="input-prefix">></span>
+                    <input type="text" 
+                           id="chat-input" 
+                           class="chat-input" 
+                           placeholder="Enter query for biological processing..."
+                           autocomplete="off">
+                    <button id="send-button" class="send-button">
+                        <span class="button-text">TRANSMIT</span>
+                    </button>
+                </div>
+                <div class="command-hints">
+                    <span class="hint">Commands: /status, /metrics, /lobes, /train, /help</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Neural Activity Visualizer -->
+        <div class="neural-visualizer">
+            <canvas id="neural-canvas"></canvas>
+            <div class="visualizer-label">REAL-TIME NEURAL ACTIVITY</div>
+        </div>
+    </div>
+    
+    <!-- Processing Indicator -->
+    <div class="processing-indicator" id="processing-indicator">
+        <div class="processing-spinner"></div>
+        <div class="processing-text">BIOLOGICAL PROCESSING...</div>
+    </div>
+    
+    <script src="/static/js/matrix-rain.js"></script>
+    <script src="/static/js/chat-interface.js"></script>
+    <script src="/static/js/neural-visualizer.js"></script>
+</body>
+</html>
