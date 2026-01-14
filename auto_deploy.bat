@@ -1,6 +1,6 @@
 @echo off
 REM ############################################################################
-REM Thalos Prime v2.0 - Auto Deploy & Launch Script for Windows
+REM Thalos Prime v3.0 - Auto Deploy & Launch Script for Windows
 REM 
 REM This script automatically sets up and runs Thalos Prime after extraction
 REM ############################################################################
@@ -25,7 +25,7 @@ echo        T     HHHHHHH  AAAAAAA  L       O     O   SSSSS
 echo        T     H     H  A     A  L       O     O        S
 echo        T     H     H  A     A  LLLLLLL  OOOOO   SSSSS
 echo.
-echo          SYNTHETIC BIOLOGICAL INTELLIGENCE v2.0
+echo          SYNTHETIC BIOLOGICAL INTELLIGENCE v3.0
 echo                 AUTO DEPLOYMENT SYSTEM
 echo.
 echo ============================================================================

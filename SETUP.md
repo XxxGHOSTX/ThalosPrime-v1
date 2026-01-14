@@ -1,4 +1,4 @@
-# Thalos Prime v2.0 - Setup and Installation Guide
+# Thalos Prime v3.0 - Setup and Installation Guide
 
 ## 🚀 Quick Start (Easiest Method)
 

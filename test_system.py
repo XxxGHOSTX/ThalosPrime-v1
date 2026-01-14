@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Thalos Prime v2.0 - Quick Start Test
+Thalos Prime v3.0 - Quick Start Test
 Tests all major components to ensure system is working
 """
 
@@ -117,7 +117,7 @@ def test_interfaces():
 def main():
     """Run all tests"""
     print("=" * 60)
-    print("THALOS PRIME v2.0 - SYSTEM TEST")
+    print("THALOS PRIME v3.0 - SYSTEM TEST")
     print("=" * 60)
     
     results = []

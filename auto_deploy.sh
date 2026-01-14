@@ -1,6 +1,6 @@
 #!/bin/bash
 ################################################################################
-# Thalos Prime v2.0 - Auto Deploy & Launch Script
+# Thalos Prime v3.0 - Auto Deploy & Launch Script
 # 
 # This script automatically sets up and runs Thalos Prime after extraction
 # Works on Linux, macOS, and Windows (via Git Bash/WSL)
@@ -29,7 +29,7 @@ print_banner() {
     echo "║      ██║   ██║  ██║██║  ██║███████╗╚██████╔╝███████║            ║"
     echo "║      ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚══════╝            ║"
     echo "║                                                                   ║"
-    echo "║              SYNTHETIC BIOLOGICAL INTELLIGENCE v2.0              ║"
+    echo "║              SYNTHETIC BIOLOGICAL INTELLIGENCE v3.0              ║"
     echo "║                    AUTO DEPLOYMENT SYSTEM                        ║"
     echo "║                                                                   ║"
     echo "╚═══════════════════════════════════════════════════════════════════╝"

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Thalos Prime v2.0 - Integration Test
+Thalos Prime v3.0 - Integration Test
 Tests complete wetware-to-chatbot pipeline
 """
 
@@ -252,7 +252,7 @@ def test_complete_pipeline():
 def main():
     """Run all integration tests"""
     print("=" * 60)
-    print("THALOS PRIME v2.0 - INTEGRATION TEST")
+    print("THALOS PRIME v3.0 - INTEGRATION TEST")
     print("=" * 60)
     
     tests = [

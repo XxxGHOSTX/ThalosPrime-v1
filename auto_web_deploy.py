@@ -2,7 +2,7 @@
 """
 © 2026 Tony Ray Macier III. All rights reserved.
 
-Thalos Prime v2.0 - Automatic Web Deployment
+Thalos Prime v3.0 - Automatic Web Deployment
 One-click deployment directly to web interface
 """
 
@@ -39,7 +39,7 @@ def print_banner():
        ██║   ██║  ██║██║  ██║███████╗╚██████╔╝███████║
        ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚══════╝
     
-      SYNTHETIC BIOLOGICAL INTELLIGENCE v2.0
+      SYNTHETIC BIOLOGICAL INTELLIGENCE v3.0
              AUTOMATIC WEB DEPLOYMENT
              
          Matrix-Style Chatbot Interface

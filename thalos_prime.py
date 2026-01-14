@@ -2,7 +2,7 @@
 """
 © 2026 Tony Ray Macier III. All rights reserved.
 
-Thalos Prime v2.0 - Synthetic Biological Intelligence
+Thalos Prime v3.0 - Synthetic Biological Intelligence
 Main System Launcher
 
 Complete system initialization and orchestration
@@ -345,7 +345,7 @@ class ThalosPrime:
 def main():
     """Main entry point"""
     parser = argparse.ArgumentParser(
-        description='Thalos Prime v2.0 - Synthetic Biological Intelligence'
+        description='Thalos Prime v3.0 - Synthetic Biological Intelligence'
     )
     
     parser.add_argument(

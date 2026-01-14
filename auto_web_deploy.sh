@@ -1,7 +1,7 @@
 #!/bin/bash
 # © 2026 Tony Ray Macier III. All rights reserved.
 #
-# Thalos Prime v2.0 - Automatic Web Deployment (Linux/macOS)
+# Thalos Prime v3.0 - Automatic Web Deployment (Linux/macOS)
 # One-click web interface launcher
 
 echo ""
@@ -14,7 +14,7 @@ echo "       ██║   ██╔══██║██╔══██║██�
 echo "       ██║   ██║  ██║██║  ██║███████╗╚██████╔╝███████║"
 echo "       ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚══════╝"
 echo ""
-echo "       SYNTHETIC BIOLOGICAL INTELLIGENCE v2.0"
+echo "       SYNTHETIC BIOLOGICAL INTELLIGENCE v3.0"
 echo "           AUTOMATIC WEB DEPLOYMENT"
 echo ""
 echo "========================================================================"

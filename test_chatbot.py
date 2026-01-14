@@ -263,7 +263,7 @@ def test_memory_operations(system):
     operations = [
         ("Create: Store project as ThalosPrime", "memory_create"),
         ("Read: What is project?", "memory_retrieve"),
-        ("Update: Change project to ThalosPrime v2.0", "memory_update"),
+        ("Update: Change project to ThalosPrime v3.0", "memory_update"),
         ("Read: Show project", "memory_retrieve"),
         ("List: Show all memories", "memory_list"),
         ("Delete: Remove project from memory", "memory_delete"),

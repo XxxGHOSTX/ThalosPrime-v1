@@ -70,7 +70,7 @@ This document outlines the enhancement plan for Thalos Prime based on the compre
 - [ ] Web UI framework selection
 - [ ] Frontend-backend integration
 
-### Phase 3: Advanced Features (v2.0) - Future
+### Phase 3: Advanced Features (v3.0) - Future
 
 #### 3.1 Kubernetes Orchestration
 - [ ] Kubernetes manifests

@@ -4,7 +4,7 @@
 
 ## Overview
 
-Added automatic web deployment capability to Thalos Prime v2.0, enabling users to set up and launch the complete Synthetic Biological Intelligence system with a single command.
+Added automatic web deployment capability to Thalos Prime v3.0, enabling users to set up and launch the complete Synthetic Biological Intelligence system with a single command.
 
 ## Files Created
 

@@ -13,7 +13,7 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 print("="*70)
-print("THALOS PRIME v2.0 - FINAL SYSTEM VALIDATION")
+print("THALOS PRIME v3.0 - FINAL SYSTEM VALIDATION")
 print("© 2026 Tony Ray Macier III. All rights reserved.")
 print("="*70 + "\n")
 
@@ -513,7 +513,7 @@ if all_passed:
     print("✓ All requirements functional")
     print("✓ Full integration confirmed")
     print("✓ System ready for deployment")
-    print("\nTHALOS PRIME v2.0 - FULLY OPERATIONAL")
+    print("\nTHALOS PRIME v3.0 - FULLY OPERATIONAL")
     print("© 2026 Tony Ray Macier III. All rights reserved.")
     sys.exit(0)
 else:

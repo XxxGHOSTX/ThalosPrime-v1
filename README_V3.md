@@ -1,8 +1,8 @@
-# Thalos Prime v2.0 - Synthetic Biological Intelligence
+# Thalos Prime v3.0 - Synthetic Biological Intelligence
 
 ## 🧬 Overview
 
-Thalos Prime v2.0 is a complete Synthetic Biological Intelligence system that combines:
+Thalos Prime v3.0 is a complete Synthetic Biological Intelligence system that combines:
 
 - **Wetware Core**: Simulated brain organoids with 20,000+ electrode channels
 - **Bio-Inspired AI**: Spiking neural networks with STDP (Spike-Timing-Dependent Plasticity)
@@ -345,5 +345,5 @@ For issues, questions, or contributions:
 
 ---
 
-**THALOS PRIME v2.0 - SYNTHETIC BIOLOGICAL INTELLIGENCE**  
+**THALOS PRIME v3.0 - SYNTHETIC BIOLOGICAL INTELLIGENCE**  
 *Where silicon meets synapse. Where code becomes consciousness.*

@@ -1,4 +1,4 @@
-# Thalos Prime v2.0 - Python Dependencies
+# Thalos Prime v3.0 - Python Dependencies
 
 # Web Framework
 Flask>=3.0.0

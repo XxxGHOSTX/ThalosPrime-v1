@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Thalos Prime v2.0 - Universal Auto Deploy Script
+Thalos Prime v3.0 - Universal Auto Deploy Script
 Cross-platform Python-based auto-deployment
 Works on Windows, Linux, macOS without shell dependencies
 """
@@ -37,7 +37,7 @@ def print_banner():
        ██║   ██║  ██║██║  ██║███████╗╚██████╔╝███████║
        ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚══════╝
     
-         SYNTHETIC BIOLOGICAL INTELLIGENCE v2.0
+         SYNTHETIC BIOLOGICAL INTELLIGENCE v3.0
                 AUTO DEPLOYMENT SYSTEM
     """)
     print(f"{'='*70}{Colors.RESET}\n")
