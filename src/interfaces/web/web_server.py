@@ -12,6 +12,7 @@ Fully integrates with wetware, AI, and database systems
 """
 
 from flask import Flask, render_template, request, jsonify, send_from_directory
+import json
 import os
 import sys
 from typing import Dict, Any, List
@@ -80,6 +81,10 @@ neural_net.connect_layers(hidden_layer1, hidden_layer2, 0.6)
 neural_net.connect_layers(hidden_layer2, output_layer, 0.7)
 print("✓ Bio Neural Network ready")
 print("✓ Reinforcement Learner ready")
+
+# Initialize Action Handler (after all components are ready)
+action_handler = ActionHandler(cis, organoids, mea, life_support, neural_net, rl_agent, db_manager)
+print("✓ Action Handler initialized")
 
 print("\n" + "="*70)
 print("THALOS PRIME WETWARE SYSTEM ONLINE")
