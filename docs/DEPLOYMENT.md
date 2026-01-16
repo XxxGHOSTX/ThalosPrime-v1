@@ -330,7 +330,7 @@ gh workflow run ci.yml
 
 ### Horizontal Scaling
 
-Coming in v2.0 with Kubernetes support:
+Coming in v3.0 with Kubernetes support:
 
 ```bash
 # Scale replicas
@@ -353,7 +353,7 @@ Future implementation will support:
 
 Data is in-memory only. No persistence required.
 
-### Future (v2.0+)
+### Future (v3.0+)
 
 ```bash
 # Backup data

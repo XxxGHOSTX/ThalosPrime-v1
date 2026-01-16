@@ -19,9 +19,12 @@ Deterministic storage interface:
 - In-memory dict-based storage
 - Explicit CRUD semantics
 - No side effects, no magic
+- Optional file-based persistence
 """
 
 from typing import Any, Dict, Optional
+import json
+import os
 
 
 class MemoryModule:
@@ -32,11 +35,23 @@ class MemoryModule:
     - In-memory dict-based implementation
     - Explicit CRUD operations
     - No automatic timestamps or side effects
+    - Optional file-based persistence for data durability
     """
     
-    def __init__(self):
-        """Initialize the Memory Module"""
+    def __init__(self, persistence_path: Optional[str] = None):
+        """
+        Initialize the Memory Module
+        
+        Args:
+            persistence_path: Optional path to JSON file for persistent storage.
+                            If provided, data will be loaded from and saved to this file.
+        """
         self.storage: Dict[str, Any] = {}
+        self.persistence_path = persistence_path
+        
+        # Load existing data from file if persistence is enabled
+        if self.persistence_path:
+            self.load_from_disk()
         
     def create(self, key: str, value: Any) -> bool:
         """
@@ -130,3 +145,48 @@ class MemoryModule:
             Number of items in storage
         """
         return len(self.storage)
+        
+    def save_to_disk(self) -> bool:
+        """
+        Save current storage to disk (if persistence is enabled)
+        
+        Returns:
+            bool: True if save successful or persistence disabled, False on error
+        """
+        if not self.persistence_path:
+            return True  # No persistence configured, nothing to do
+            
+        try:
+            # Create directory if it doesn't exist
+            os.makedirs(os.path.dirname(self.persistence_path), exist_ok=True)
+            
+            # Write storage to JSON file
+            with open(self.persistence_path, 'w') as f:
+                json.dump(self.storage, f, indent=2)
+            return True
+        except Exception as e:
+            # In production, you'd log this error
+            print(f"Error saving to disk: {e}")
+            return False
+            
+    def load_from_disk(self) -> bool:
+        """
+        Load storage from disk (if persistence is enabled and file exists)
+        
+        Returns:
+            bool: True if load successful or file doesn't exist, False on error
+        """
+        if not self.persistence_path:
+            return True  # No persistence configured, nothing to do
+            
+        if not os.path.exists(self.persistence_path):
+            return True  # File doesn't exist yet, start with empty storage
+            
+        try:
+            with open(self.persistence_path, 'r') as f:
+                self.storage = json.load(f)
+            return True
+        except Exception as e:
+            # In production, you'd log this error
+            print(f"Error loading from disk: {e}")
+            return False

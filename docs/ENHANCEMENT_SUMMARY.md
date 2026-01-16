@@ -132,10 +132,10 @@ Placeholder services ready for:
 
 #### Configurable ✅
 **Current**: Configuration via `config/thalos.conf`
-**Planned**: GitHub Actions integration for hot-reload (v2.0)
+**Planned**: GitHub Actions integration for hot-reload (v3.0)
 
 #### Auto-sync & Hot-reload 📋
-**Status**: Planned for v2.0
+**Status**: Planned for v3.0
 
 Architecture designed to support:
 - Module versioning system
@@ -146,7 +146,7 @@ Architecture designed to support:
 ### 5. Continuous Lifecycle Management
 
 #### Automated Lifecycle Audits 📋
-**Status**: Planned for Phase 3 (v2.0)
+**Status**: Planned for Phase 3 (v3.0)
 
 **Current Foundation**:
 - CIS lifecycle hooks (boot, shutdown, status)
@@ -159,7 +159,7 @@ Architecture designed to support:
 - Performance metrics collection
 
 #### Integration of Monitoring 📋
-**Status**: Phase 3 (v2.0)
+**Status**: Phase 3 (v3.0)
 
 **Planned Features**:
 - Active alerting system
@@ -186,7 +186,7 @@ Architecture designed to support:
 - Policy enforcement
 
 #### External Threat Vectors 📋
-**Status**: Phase 3 (v2.0+)
+**Status**: Phase 3 (v3.0+)
 
 **Planned**:
 - D-04 automated scanning
@@ -238,7 +238,7 @@ Rationale:
 - Explicit state management
 - Zero persistence overhead
 
-#### Planned (Phase 3 - v2.0+) 📋
+#### Planned (Phase 3 - v3.0+) 📋
 **Database Integration**:
 - PostgreSQL/MongoDB selection
 - Memory module persistence
@@ -271,7 +271,7 @@ Target: 2-4 weeks
 - [ ] API expansion (GraphQL consideration)
 - [ ] Security baseline
 
-### 📋 Phase 3 (v2.0 - Future)
+### 📋 Phase 3 (v3.0 - Future)
 Target: 1-2 months
 
 - [ ] Kubernetes orchestration
@@ -365,7 +365,7 @@ docker-compose down
 - Metrics collection
 - Performance tracking
 
-### v1.2 → v2.0 (Planned)
+### v1.2 → v3.0 (Planned)
 **Focus**: Enterprise features
 - Data persistence
 - Advanced security
