@@ -45,6 +45,141 @@ class CodeGenerator:
         self.templates: Dict[str, str] = {}
         self.track_history = track_history
         self.generation_history: list = []
+        self._initialized = False
+        self._validated = False
+        self._state = 'created'
+        
+    def initialize(self) -> bool:
+        """
+        Initialize code generator - Lifecycle hook
+        
+        Allocates resources and verifies preconditions.
+        
+        Returns:
+            bool: True if initialization successful
+        """
+        if self._initialized:
+            return True
+            
+        try:
+            # Ensure templates dict is initialized
+            if self.templates is None:
+                self.templates = {}
+            if self.generation_history is None:
+                self.generation_history = []
+                
+            self._initialized = True
+            self._state = 'initialized'
+            return True
+        except Exception:
+            self._state = 'error'
+            return False
+            
+    def validate(self) -> bool:
+        """
+        Validate code generator - Lifecycle hook
+        
+        Blocks startup if configuration invalid.
+        
+        Returns:
+            bool: True if validation successful
+        """
+        if not self._initialized:
+            return False
+            
+        if self._validated:
+            return True
+            
+        try:
+            # Validate templates are strings
+            if not isinstance(self.templates, dict):
+                return False
+            for key, value in self.templates.items():
+                if not isinstance(key, str) or not isinstance(value, str):
+                    return False
+                    
+            self._validated = True
+            self._state = 'validated'
+            return True
+        except Exception:
+            self._state = 'error'
+            return False
+            
+    def operate(self) -> Dict[str, Any]:
+        """
+        Perform codegen operations - Lifecycle hook
+        
+        Returns current operational status.
+        
+        Returns:
+            dict: Operational status
+        """
+        return {
+            'state': self._state,
+            'initialized': self._initialized,
+            'validated': self._validated,
+            'template_count': len(self.templates),
+            'history_size': len(self.generation_history),
+            'tracking_history': self.track_history
+        }
+        
+    def reconcile(self) -> bool:
+        """
+        Reconcile internal state - Lifecycle hook
+        
+        Corrects any internal inconsistencies.
+        
+        Returns:
+            bool: True if reconciliation successful
+        """
+        # Ensure templates is a dict
+        if not isinstance(self.templates, dict):
+            self.templates = {}
+            
+        # Ensure generation_history is a list
+        if not isinstance(self.generation_history, list):
+            self.generation_history = []
+            
+        # Remove invalid template entries
+        keys_to_remove = []
+        for key, value in self.templates.items():
+            if not isinstance(key, str) or not isinstance(value, str):
+                keys_to_remove.append(key)
+        for key in keys_to_remove:
+            del self.templates[key]
+            
+        return True
+        
+    def checkpoint(self) -> Dict[str, Any]:
+        """
+        Checkpoint codegen state - Lifecycle hook
+        
+        Persists full deterministic state for recovery.
+        
+        Returns:
+            dict: Serialized state
+        """
+        return {
+            'version': '1.0',
+            'state': self._state,
+            'initialized': self._initialized,
+            'validated': self._validated,
+            'templates': self.templates.copy(),
+            'track_history': self.track_history,
+            'generation_history': self.generation_history.copy()
+        }
+        
+    def terminate(self) -> bool:
+        """
+        Terminate code generator - Lifecycle hook
+        
+        Leaves system restartable and coherent.
+        
+        Returns:
+            bool: True if termination successful
+        """
+        self._state = 'terminated'
+        return True
         
     def register_template(self, template_name: str, template_content: str) -> bool:
         """

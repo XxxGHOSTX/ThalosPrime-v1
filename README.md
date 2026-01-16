@@ -200,36 +200,79 @@ python thalos_prime.py web --host 0.0.0.0 --port 8080
 
 ### Python API Usage
 
+**CORRECT Pattern: CIS Ownership** (v1.0+)
+
+All subsystems are owned and initialized by CIS. No direct instantiation permitted.
+
 ```python
-from thalos_prime import ThalosPrime
+from src.core.cis import CIS
 
-# Initialize system
-thalos = ThalosPrime()
-config = {
-    'enable_wetware': True,
-    'enable_ai': True,
-    'enable_database': True
-}
-thalos.initialize(config)
+# Initialize CIS - the system orchestrator
+cis = CIS()
 
-# Access neural network
-net_stats = thalos.neural_network.get_network_stats()
-print(f"Network has {net_stats['num_neurons']} neurons")
+# Boot system - CIS initializes all subsystems including CLI, API, Memory, CodeGen
+if cis.boot():
+    print("System operational")
+    
+    # Access CIS-owned subsystems (DO NOT create new instances)
+    memory = cis.get_memory()
+    codegen = cis.get_codegen()
+    cli = cis.get_cli()
+    api = cis.get_api()
+    
+    # Use memory subsystem
+    memory.store("key", "value")
+    value = memory.retrieve("key")
+    
+    # Use codegen subsystem
+    code = codegen.generate_class("MyClass", methods=["process", "validate"])
+    
+    # Get system status
+    status = cis.status()
+    print(f"Status: {status['status']}")
+    print(f"Subsystems: {status['subsystems']}")
+    
+    # Lifecycle methods
+    checkpoint = cis.checkpoint()  # Save state
+    cis.reconcile()  # Fix inconsistencies
+    
+    # Cleanup
+    cis.shutdown()
+else:
+    print("Boot failed - system halted deterministically")
+```
 
-# Access organoids
-for organoid in thalos.organoids:
-    status = organoid.get_status()
-    print(f"Organoid {status['organoid_id']}: {status['health_status']}")
+**DEPRECATED Pattern** (Pre-v1.0 - Do Not Use):
+```python
+# ❌ WRONG - Creates orphaned instances
+from interfaces.cli import CLI
+from interfaces.api import API
 
-# Process input through wetware
-stimulus = {'type': 'pattern', 'intensity': 0.8, 'data': {...}}
-response = thalos.organoids[0].process_stimulus(stimulus)
+cli = CLI(cis)  # Duplicates CIS-owned instance
+api = API(cis)  # Violates ownership principle
+```
+
+### Programmatic REST API Usage
+
+```python
+import requests
+
+# System must be booted via CIS first
+# Access CIS-owned API endpoints
 
 # Get system status
-status = thalos.get_system_status()
+response = requests.get('http://localhost:5000/api/status')
+status = response.json()
 
-# Cleanup
-thalos.shutdown()
+# Memory operations
+requests.post('http://localhost:5000/api/memory', 
+              json={'key': 'mykey', 'value': 'myvalue'})
+
+requests.get('http://localhost:5000/api/memory/mykey')
+
+# Code generation
+requests.post('http://localhost:5000/api/codegen/class',
+              json={'name': 'MyClass', 'methods': ['process']})
 ```
 
 ---

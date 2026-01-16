@@ -48,10 +48,150 @@ class MemoryModule:
         """
         self.storage: Dict[str, Any] = {}
         self.persistence_path = persistence_path
+        self._initialized = False
+        self._validated = False
+        self._state = 'created'
         
         # Load existing data from file if persistence is enabled
         if self.persistence_path:
             self.load_from_disk()
+            
+    def initialize(self) -> bool:
+        """
+        Initialize memory module - Lifecycle hook
+        
+        Allocates resources and verifies preconditions.
+        
+        Returns:
+            bool: True if initialization successful
+        """
+        if self._initialized:
+            return True
+            
+        try:
+            # Ensure storage is initialized
+            if self.storage is None:
+                self.storage = {}
+                
+            self._initialized = True
+            self._state = 'initialized'
+            return True
+        except Exception:
+            self._state = 'error'
+            return False
+            
+    def validate(self) -> bool:
+        """
+        Validate memory module - Lifecycle hook
+        
+        Blocks startup if configuration invalid.
+        
+        Returns:
+            bool: True if validation successful
+        """
+        if not self._initialized:
+            return False
+            
+        if self._validated:
+            return True
+            
+        try:
+            # Validate persistence path if configured
+            if self.persistence_path:
+                import os
+                directory = os.path.dirname(self.persistence_path)
+                if directory and not os.path.exists(directory):
+                    os.makedirs(directory, exist_ok=True)
+                    
+            # Validate storage is a dict
+            if not isinstance(self.storage, dict):
+                return False
+                
+            self._validated = True
+            self._state = 'validated'
+            return True
+        except Exception:
+            self._state = 'error'
+            return False
+            
+    def operate(self) -> Dict[str, Any]:
+        """
+        Perform memory operations - Lifecycle hook
+        
+        Returns current operational status.
+        
+        Returns:
+            dict: Operational status
+        """
+        return {
+            'state': self._state,
+            'initialized': self._initialized,
+            'validated': self._validated,
+            'item_count': len(self.storage),
+            'persistence_enabled': self.persistence_path is not None
+        }
+        
+    def reconcile(self) -> bool:
+        """
+        Reconcile internal state - Lifecycle hook
+        
+        Corrects any internal inconsistencies.
+        
+        Returns:
+            bool: True if reconciliation successful
+        """
+        # Ensure storage is a dict
+        if not isinstance(self.storage, dict):
+            self.storage = {}
+            
+        # Remove any None keys
+        keys_to_remove = [k for k in self.storage.keys() if k is None]
+        for k in keys_to_remove:
+            del self.storage[k]
+            
+        return True
+        
+    def checkpoint(self) -> Dict[str, Any]:
+        """
+        Checkpoint memory state - Lifecycle hook
+        
+        Persists full deterministic state for recovery.
+        
+        Returns:
+            dict: Serialized state
+        """
+        state = {
+            'version': '1.0',
+            'state': self._state,
+            'initialized': self._initialized,
+            'validated': self._validated,
+            'item_count': len(self.storage),
+            'persistence_path': self.persistence_path,
+            'data': self.storage.copy()
+        }
+        
+        # Also save to disk if persistence enabled
+        if self.persistence_path:
+            self.save_to_disk()
+            
+        return state
+        
+    def terminate(self) -> bool:
+        """
+        Terminate memory module - Lifecycle hook
+        
+        Leaves system restartable and coherent.
+        
+        Returns:
+            bool: True if termination successful
+        """
+        # Save to disk before terminating
+        if self.persistence_path:
+            self.save_to_disk()
+            
+        # Clear state but don't destroy storage (allows restart)
+        self._state = 'terminated'
+        return True
         
     def create(self, key: str, value: Any) -> bool:
         """

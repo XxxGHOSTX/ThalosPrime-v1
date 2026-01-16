@@ -12,6 +12,7 @@ Fully integrates with wetware, AI, and database systems
 """
 
 from flask import Flask, render_template, request, jsonify, send_from_directory
+import json
 import os
 import sys
 from typing import Dict, Any, List
@@ -42,6 +43,10 @@ print("✓ CIS operational")
 # Initialize NLP Processor
 nlp = NLPProcessor()
 print("✓ NLP Processor initialized")
+
+# Initialize Action Handler
+action_handler = ActionHandler(cis)
+print("✓ Action Handler initialized")
 
 # Initialize Database
 db_manager = DatabaseManager(db_type="memory")
