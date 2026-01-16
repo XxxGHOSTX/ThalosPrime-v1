@@ -44,6 +44,9 @@ Thumbs.db
 .coverage
 .pytest_cache/
 htmlcov/
+coverage.xml
+.mypy_cache/
+.tox/
 
 # Temporary
 /tmp/
