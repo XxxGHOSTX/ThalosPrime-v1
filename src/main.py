@@ -68,7 +68,7 @@ def main():
     
     # Get interface layers from CIS (CIS owns all subsystems)
     cli = cis.get_cli()
-    api = cis.get_api()
+    cis.get_api()
     
     print("✓ CLI initialized (thin delegation layer)")
     print("✓ API initialized (stateless REST interface)")
