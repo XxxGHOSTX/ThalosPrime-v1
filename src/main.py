@@ -32,8 +32,6 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from core.cis import CIS
-from interfaces.cli import CLI
-from interfaces.api import API
 
 
 def main():
@@ -42,10 +40,9 @@ def main():
     
     Establishes the control hierarchy:
     1. Create CIS (Central Intelligence System) - primary authority
-    2. Boot CIS - initializes all subsystems
-    3. Create thin interface layers (CLI, API)
-    4. Connect interfaces to CIS for delegation
-    5. Run CLI in interactive mode
+    2. Boot CIS - initializes all subsystems (Memory, CodeGen, CLI, API)
+    3. Retrieve interface layers from CIS for user interaction
+    4. Execute CLI commands with delegation to CIS subsystems
     """
     print("=== Thalos Prime v1.0 ===")
     print("Deterministic System Framework")
@@ -69,9 +66,9 @@ def main():
     print()
     print("Initializing interfaces...")
     
-    # Create thin interface layers - delegate to CIS
-    cli = CLI(cis)
-    api = API(cis)
+    # Get interface layers from CIS (CIS owns all subsystems)
+    cli = cis.get_cli()
+    api = cis.get_api()
     
     print("✓ CLI initialized (thin delegation layer)")
     print("✓ API initialized (stateless REST interface)")

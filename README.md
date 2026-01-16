@@ -135,7 +135,6 @@ python src/main.py shutdown
 
 ```python
 from core.cis import CIS
-from interfaces.api import API
 
 # Create and boot CIS
 cis = CIS()
@@ -152,8 +151,8 @@ value = memory.read('key')
 codegen = cis.get_codegen()
 code = codegen.generate_class('MyClass', ['method1', 'method2'])
 
-# Use API interface
-api = API(cis)
+# Access API interface from CIS
+api = cis.get_api()
 response = api.handle_request('GET', '/status')
 response = api.handle_request('POST', '/memory', {'key': 'k1', 'value': 'v1'})
 response = api.handle_request('GET', '/memory/k1')
