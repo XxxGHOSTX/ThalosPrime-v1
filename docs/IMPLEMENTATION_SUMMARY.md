@@ -107,7 +107,6 @@ python src/main.py codegen function my_function --params arg1 arg2
 
 ```python
 from core.cis import CIS
-from interfaces.api import API
 
 # Create and boot system
 cis = CIS()
@@ -121,8 +120,8 @@ value = memory.read('key')
 codegen = cis.get_codegen()
 code = codegen.generate_class('MyClass', ['method1', 'method2'])
 
-# Use API interface
-api = API(cis)
+# Use API interface (get from CIS)
+api = cis.get_api()
 response = api.handle_request('GET', '/status')
 response = api.handle_request('POST', '/memory', {'key': 'k1', 'value': 'v1'})
 ```
