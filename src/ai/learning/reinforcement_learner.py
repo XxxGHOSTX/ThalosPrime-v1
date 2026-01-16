@@ -16,6 +16,7 @@ Real reinforcement learning implementation modeling dopaminergic reward systems:
 
 import random
 import math
+import ast
 from typing import Dict, List, Tuple, Any, Optional
 from collections import deque
 
@@ -251,7 +252,7 @@ class ReinforcementLearner:
     def load_policy(self, policy_data: Dict[str, Any]) -> None:
         """Load saved policy"""
         # Convert string keys back to tuples
-        self.q_table = {eval(k): v for k, v in policy_data["q_table"].items()}
+        self.q_table = {ast.literal_eval(k): v for k, v in policy_data["q_table"].items()}
         
         params = policy_data["parameters"]
         self.learning_rate = params["learning_rate"]

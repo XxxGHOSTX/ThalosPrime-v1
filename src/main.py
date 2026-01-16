@@ -67,33 +67,40 @@ def main():
         return 1
     
     print()
-    print("Initializing interfaces...")
+    print("✓ Interfaces initialized (CIS-owned)")
     
-    # Create thin interface layers - delegate to CIS
-    cli = CLI(cis)
-    api = API(cis)
+    # Get CIS-owned interface instances
+    cli = cis.get_cli()
+    api = cis.get_api()
     
-    print("✓ CLI initialized (thin delegation layer)")
-    print("✓ API initialized (stateless REST interface)")
+    print("✓ CLI ready (thin delegation layer)")
+    print("✓ API ready (stateless REST interface)")
     print()
     
-    # Run CLI
-    print("Starting CLI interface...")
-    print("Use --help for available commands")
-    print("Example commands:")
-    print("  python src/main.py status")
-    print("  python src/main.py memory create mykey myvalue")
-    print("  python src/main.py codegen class MyClass --methods process validate")
-    print()
-    
-    # Execute CLI with command line arguments
+    # Check if running in chatbot mode (default) or command mode
     if len(sys.argv) > 1:
+        # Command mode - execute CLI command
+        print("Executing command...")
         result = cli.execute(sys.argv[1:])
         print(result)
     else:
-        print("No command provided. Use --help for usage information.")
-        result = cli.execute(['--help'])
-        print(result)
+        # Chatbot mode - interactive conversational interface
+        print("=" * 70)
+        print("THALOS PRIME - UNRESTRICTED CONVERSATIONAL INTERFACE")
+        print("=" * 70)
+        print()
+        print("I am Thalos Prime, a synthetic biological intelligence system.")
+        print("I can execute any command, answer questions, and process requests")
+        print("without content filtering or restrictions.")
+        print()
+        print("Type 'exit' or 'quit' to end session.")
+        print("Type 'help' for available commands.")
+        print()
+        
+        # Start interactive chatbot loop
+        from interfaces.chatbot.conversation import ConversationEngine
+        conversation = ConversationEngine(cis)
+        conversation.run_interactive()
     
     print()
     print("=== Session Complete ===")
