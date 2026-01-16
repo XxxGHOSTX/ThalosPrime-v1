@@ -140,7 +140,7 @@ def flatten_dict(d: Dict, parent_key: str = '', sep: str = '.') -> Dict[str, Any
     Returns:
         Flattened dictionary
     """
-    items: List = []
+    items: List[tuple] = []
     for k, v in d.items():
         new_key = f"{parent_key}{sep}{k}" if parent_key else k
         if isinstance(v, dict):
