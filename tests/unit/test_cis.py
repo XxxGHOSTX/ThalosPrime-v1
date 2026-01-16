@@ -111,6 +111,20 @@ def test_subsystem_access():
     print("✓ Subsystem access test passed")
 
 
+def test_interfaces_bound_to_cis():
+    """Ensure interfaces initialized by CIS are bound to the CIS instance"""
+    cis = CIS()
+    cis.boot()
+    
+    cli = cis.get_cli()
+    api = cis.get_api()
+    
+    assert cli is not None and cli.cis is cis
+    assert api is not None and api.cis is cis
+    
+    print("✓ Interfaces bound to CIS test passed")
+
+
 def test_subsystem_initialization_order():
     """Test that CIS initializes subsystems in correct order"""
     cis = CIS()
@@ -136,5 +150,6 @@ if __name__ == '__main__':
     test_shutdown_lifecycle()
     test_status_lifecycle()
     test_subsystem_access()
+    test_interfaces_bound_to_cis()
     test_subsystem_initialization_order()
     print("\nAll CIS tests passed!")

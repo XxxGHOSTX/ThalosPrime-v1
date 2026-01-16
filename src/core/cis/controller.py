@@ -78,8 +78,8 @@ class CIS:
         # Initialize subsystems
         self.memory = MemoryModule()
         self.codegen = CodeGenerator()
-        self.cli = CLI()
-        self.api = API()
+        self.cli = CLI(self)
+        self.api = API(self)
         
         # Update state
         self.system_state['status'] = 'operational'
